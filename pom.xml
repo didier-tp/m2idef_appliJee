@@ -7,5 +7,6 @@
   <modules>
   	<module>appliJee-web</module>
   	<module>appliJee-ejb</module>
+  	<module>appliJee-ear</module>
   </modules>
 </project>

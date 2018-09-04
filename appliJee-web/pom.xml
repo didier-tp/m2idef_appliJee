@@ -29,6 +29,8 @@
 			<groupId>fr.m2i.formation</groupId>
 			<artifactId>appliJee-ejb</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope> <!-- la partie EJB prise en charge par le serveur JEE
+			                            sera fournie au coté web -->
 		</dependency>
   </dependencies>
   

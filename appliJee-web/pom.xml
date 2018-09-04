@@ -7,4 +7,29 @@
   </parent>
   <artifactId>appliJee-web</artifactId>
   <packaging>war</packaging>
+  
+  <properties>
+      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
+      <failOnMissingWebXml>false</failOnMissingWebXml>
+  </properties>
+  
+  <dependencies>
+  
+        <!--  javaee-api est un pack comportant l'api des Servlet , JSP , ... -->
+		<dependency>
+		    <groupId>javax</groupId>
+		    <artifactId>javaee-api</artifactId>
+		    <version>7.0</version>
+		    <scope>provided</scope> <!-- déja fourni par le serveur jee 
+		                                 (ex: jboss wilfdly) -->
+		</dependency>
+		
+		<dependency>
+			<groupId>fr.m2i.formation</groupId>
+			<artifactId>appliJee-ejb</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+  </dependencies>
+  
 </project>

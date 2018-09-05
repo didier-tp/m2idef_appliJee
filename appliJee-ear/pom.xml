@@ -14,7 +14,8 @@
       <groupId>fr.m2i.formation</groupId>
       <artifactId>appliJee-ejb</artifactId>
       <version>0.0.1-SNAPSHOT</version>
-      <type>jar</type>       
+      <type>ejb</type>  <!-- type=ejb plutot que type=jar si ejbModule 
+                                      dans configuration du plugin ear -->     
     </dependency>
   
  

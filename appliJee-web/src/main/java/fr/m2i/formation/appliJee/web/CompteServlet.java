@@ -30,16 +30,29 @@ public class CompteServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String numeroCompteAsString = request.getParameter("numeroCompte");
-		long numeroCompte = Long.parseLong(numeroCompteAsString);
-		
-		Compte compte = serviceCompte.rechercherCompteParNumero(numeroCompte);
-		
+		String task = request.getParameter("task");
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.println("<html><body>");
-		out.println("label="+compte.getLabel()+"<br/>");
-		out.println("solde="+compte.getSolde()+"<br/>");
+		if(task.equals("virement")) {
+			long numCptDeb=Long.parseLong(request.getParameter("numCptDeb"));
+			long numCptCred=Long.parseLong(request.getParameter("numCptCred"));
+			double montant=Double.parseDouble(request.getParameter("montant"));
+			try {
+				serviceCompte.transferer(montant, numCptDeb, numCptCred);
+				out.println("virement bien effectué <br/>");
+			} catch (Exception e) {
+				out.println("echec virement <br/>");
+				//e.printStackTrace();
+			}
+		}
+		else if(task.equals("rechercherCompte")) {
+			String numeroCompteAsString = request.getParameter("numeroCompte");
+			long numeroCompte = Long.parseLong(numeroCompteAsString);
+			Compte compte = serviceCompte.rechercherCompteParNumero(numeroCompte);
+			out.println("label="+compte.getLabel()+"<br/>");
+			out.println("solde="+compte.getSolde()+"<br/>");
+		}
 		out.println("</body></html>");
 	}
 

@@ -8,7 +8,10 @@
     http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="appliJee-ejb">
 	   <!-- parametrage de la connection à la base de donnée: -->
-	   <jta-data-source>java:/nomchoseAparametrerDansJboss</jta-data-source>
+	   <jta-data-source>java:jboss/datasources/CompteDS</jta-data-source>
+	   <!-- java:jboss/datasources/CompteDS est un jndi-name configure dans 
+	        standalone\configuration\standalone.xml de jboss wildfly -->
+	   
 	   <properties>
 	       <property name="hibernate.hbm2ddl.auto" value="create"/> 
 	       <!-- si valeur "create" les tables sont créées automatiquement
@@ -16,7 +19,7 @@
 	            et l'éventuel fichier import.sql est lancé s'il existe 
 	            pratique en phase de développement MAIS PAS EN PROD -->
            <property name="hibernate.dialect" 
-                     value="org.hibernate.dialect.MySQLDialect"/>
+                     value="org.hibernate.dialect.H2Dialect"/>
 	   </properties>
 	</persistence-unit>
 </persistence>

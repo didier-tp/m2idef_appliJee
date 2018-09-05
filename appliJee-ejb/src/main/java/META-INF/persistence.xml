@@ -8,9 +8,11 @@
     http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="appliJee-ejb">
 	   <!-- parametrage de la connection à la base de donnée: -->
-	   <jta-data-source>java:jboss/datasources/CompteDS</jta-data-source>
+	   <jta-data-source>java:jboss/datasources/MysqlCompteDS</jta-data-source>
 	   <!-- java:jboss/datasources/CompteDS est un jndi-name configure dans 
-	        standalone\configuration\standalone.xml de jboss wildfly -->
+	        standalone\configuration\standalone.xml de jboss wildfly 
+	        deux variantes : CompteDS avec H2 et MysqlCompteDS avec Mysql
+	        -->
 	   
 	   <properties>
 	       <property name="hibernate.hbm2ddl.auto" value="create"/> 
@@ -19,7 +21,8 @@
 	            et l'éventuel fichier import.sql est lancé s'il existe 
 	            pratique en phase de développement MAIS PAS EN PROD -->
            <property name="hibernate.dialect" 
-                     value="org.hibernate.dialect.H2Dialect"/>
+                     value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+           <!-- H2Dialect ou bien MySQL5InnoDBDialect -->          
 	   </properties>
 	</persistence-unit>
 </persistence>

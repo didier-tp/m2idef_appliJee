@@ -16,7 +16,7 @@ import fr.m2i.formation.appliJee.service.IServiceCompte;
 /**
  * Servlet implementation class CompteServlet
  */
-@WebServlet
+@WebServlet(name="CompteServlet", urlPatterns="/CompteServlet")
 public class CompteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
      

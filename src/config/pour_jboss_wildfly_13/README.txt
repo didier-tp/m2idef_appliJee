@@ -1,0 +1,1 @@
+copie de standalone.xml dans standalone/configuration de jboss wildfly13

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>virement</title>
+</head>
+<body>
+    <form action="CompteServlet" method="post">
+        <input type="hidden" name="task" value="virement" />
+        montant: <input type="text" name="montant" /><br/>
+        numCptDeb: <input type="text" name="numCptDeb" /><br/>
+        numCptCred: <input type="text" name="numCptCred" /><br/>
+        <input type="submit" value="effectuer virement" /><br/>
+    </form>
+</body>
+</html>

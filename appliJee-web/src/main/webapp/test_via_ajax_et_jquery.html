@@ -1,0 +1,95 @@
+   <html >
+    <head>
+	<script src="jquery-3.2.1.js"></script>
+    <script>
+	  var compteList;
+	  var compteNumSelected;//id=.numero
+	  var compteSelected;
+	  
+	  function display_selected_compte(){
+	             $("#spanMsg").html( "selected compte:" + compteNumSelected) ;
+				 $('#spanNumero').html(compteSelected.numero);
+				 $('#txtLabel').val(compteSelected.label);
+				 $('#txtSolde').val(compteSelected.solde);
+	  }
+	
+	  function local_update_selected_compte(){	             
+		  compteSelected.label= $('#txtLabel').val();
+		  compteSelected.solde= $('#txtSolde').val();
+	  }
+	  
+      $(function() {
+	 	  
+	    $.ajax({
+           type: "GET",
+           url: "rest/service/compte?numMax=2",
+		   success: function (data,status,xhr) {
+               if (data) {
+			       //alert(JSON.stringify(data));
+			       compteList = data;
+				   for(compteIndex in compteList){
+				       var compte=compteList[compteIndex];
+					   if(compteIndex==0)
+					      { compteSelected = compte; compteNumSelected = compte.numero; }
+				       //alert(JSON.stringify(compte));
+				       $('#selCompte').append('<option  value="'+ compte.numero +'">'
+				    		               + compte.label + '</option>');					   
+				   }
+				   display_selected_compte();
+               } else {
+                   $("#spanMsg").html("Cannot GET comptes !");
+               }
+           }
+		   });
+        
+		
+	    
+		$('#btnUpdate').on('click',function(){
+		 local_update_selected_compte();
+		 
+		//$("#spanMsg").html( "message in the bottle" + JSON.stringify(compteSelected) ) ;
+		 $.ajax({
+           type: "POST",
+           url: "rest/service/compte",
+           contentType : "application/json" ,
+           dataType: "json",
+		   data: JSON.stringify(compteSelected),
+           success: function (updatedData) {
+               if (updatedData) {
+                  $("#spanMsg").html("updated data (server side):" + JSON.stringify(updatedData));
+               } else {
+                   $("#spanMsg").html("Cannot PUT updated data");
+               }
+           },
+           error: function(xhr, status, error){
+        	   $("#spanMsg").html( "status:" + status + " error : " + error ) ;
+           }
+		   });
+		});
+	
+		
+		$('#selCompte').on('change',function(evt){
+		         compteNumSelected = $(evt.target).val();
+				 for(compteIndex in compteList){
+				       var compte=compteList[compteIndex];
+					   if(compte.numero == compteNumSelected)
+					       compteSelected  = compte;
+				 }
+				 display_selected_compte();
+		});
+      }); 
+   </script>
+   </head>
+     <body>
+	
+	  compte (to update) : <select id="selCompte"> </select>
+	  <hr/>
+	  numero : <span id="spanNumero" ></span><br/>
+	  label : <input id="txtLabel" type='text' /><br/>
+	  solde : <input id="txtSolde" type='text' /><br/>
+	  <input type='button' value="update compte" id="btnUpdate"/> <br/>
+	  <span id="spanMsg"></span> <br/>
+	  <hr/>
+	  <a href="index.html">retour vers index.html</a>
+	  </body>
+     </html>

@@ -39,10 +39,14 @@ public class CompteRest {
 		return serviceCompte.rechercherCompteParNumero(num);
 	}
 	
+	//a tester avec PostMan , avec Content-Type = application/json dans Headers
+	//et Body en mode "raw"
 	@POST
 	@Path("")
 	// URL= http://localhost:8080/appliJee-web/rest/service/compte appelé en method=POST
-	// avec { "numero":3 ou null , "label": "compte xy" , "solde" : 50.0 } dans le corps invisible de la requete
+	// avec { "numero": null ou 3 , "label": "compte xy" , "solde" : 50.0 } 
+	// dans le corps/body invisible de la requete en mode "raw"
+	//et au format Content-Type=application/json
 	public Compte postCompte(Compte compte) {
 		serviceCompte.saveOrUpdateCompte(compte);
 		return compte;//en retour , copie du compte sauvegardé avec clef primaire quelquefois auto_incr

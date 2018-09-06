@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -18,7 +20,8 @@ import fr.m2i.formation.appliJee.service.IServiceCompte;
  */
 
 @Path("service/compte")
-@Produces("application/json")
+@Produces("application/json") //en retour Java --> JSON
+@Consumes("application/json") //en entree (POST) JSON --> Java
 public class CompteRest {
 	
 	//le ancien @EJB n'est pas interprété ici dans la techno récente JAX-RS
@@ -35,6 +38,16 @@ public class CompteRest {
 		//v2 avec EJB:
 		return serviceCompte.rechercherCompteParNumero(num);
 	}
+	
+	@POST
+	@Path("")
+	// URL= http://localhost:8080/appliJee-web/rest/service/compte appelé en method=POST
+	// avec { "numero":3 ou null , "label": "compte xy" , "solde" : 50.0 } dans le corps invisible de la requete
+	public Compte postCompte(Compte compte) {
+		serviceCompte.saveOrUpdateCompte(compte);
+		return compte;//en retour , copie du compte sauvegardé avec clef primaire quelquefois auto_incr
+	}
+	
 	
 	@GET
 	@Path("")

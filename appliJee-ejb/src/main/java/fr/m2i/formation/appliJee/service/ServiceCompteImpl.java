@@ -50,4 +50,14 @@ public class ServiceCompteImpl implements IServiceCompte {
 		//               ou rollback automatique si execption remontée
 	}
 
+	@Override
+	public void saveOrUpdateCompte(Compte compte) {
+		if(compte.getNumero()==null) {
+			daoCompte.createCompte(compte);//INSERT INTO , via .persist()
+		}
+		else {
+			daoCompte.updateCompte(compte);//UPDATE , via .merge()
+		}
+	}
+
 }

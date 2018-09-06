@@ -24,4 +24,5 @@ public interface IServiceCompte {
     		                  @WebParam(name="numCptDeb")long numCptDeb,
     		                  @WebParam(name="numCptCred")long numCptCred);//virement
        //...
+	   public void saveOrUpdateCompte(Compte compte);
 }

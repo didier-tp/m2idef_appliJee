@@ -1,5 +1,8 @@
 package fr.m2i.formation.appliJee.service;
 
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
 import fr.m2i.formation.appliJee.entity.Compte;
 
 /*
@@ -12,8 +15,13 @@ import fr.m2i.formation.appliJee.entity.Compte;
  *     tout le reste est délégué au DAO .
  */
 
+@WebService //pour permettre appel WS SOAP
+//@WebParam pour que les noms des paramètres soient corrects dans la description
+//WSDL générée
 public interface IServiceCompte {
-       public Compte rechercherCompteParNumero(long numero);
-       public void transferer(double montant,long numCptDeb,long numCptCred);//virement
+       public Compte rechercherCompteParNumero(@WebParam(name="numero")long numero);
+       public void transferer(@WebParam(name="montant") double montant,
+    		                  @WebParam(name="numCptDeb")long numCptDeb,
+    		                  @WebParam(name="numCptCred")long numCptCred);//virement
        //...
 }

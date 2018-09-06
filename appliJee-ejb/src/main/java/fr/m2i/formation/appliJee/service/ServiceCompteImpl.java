@@ -3,8 +3,7 @@ package fr.m2i.formation.appliJee.service;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import javax.jws.WebService;
 
 import fr.m2i.formation.appliJee.dao.IDaoCompte;
 import fr.m2i.formation.appliJee.entity.Compte;
@@ -13,10 +12,15 @@ import fr.m2i.formation.appliJee.entity.Compte;
  * implémentation du service sous forme d'EJB
  */
 
+// NB: jboss doit être paramétré avec l'option -b 0.0.0.0 
+// pour accepter des requêtes provenant d'autres ordinateurs
+// ex: 172.28.11.24 plutôt que localhost
+
 @Stateless //EJB Session sans état (EJB de traitement)
 @Local //accès local possible (depuis autre EJB ou partie web)
 //@TransactionManagement(TransactionManagementType.CONTAINER) par défaut sur EJB
 //@TransactionAttribute(TransactionAttributeType.REQUIRED)par défaut sur EJB
+@WebService(endpointInterface="fr.m2i.formation.appliJee.service.IServiceCompte")
 public class ServiceCompteImpl implements IServiceCompte {
 	
 	@EJB //@EJB permet de demander une initialisation de "daoCompte"

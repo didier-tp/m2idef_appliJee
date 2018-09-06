@@ -3,7 +3,7 @@ package fr.m2i.formation.appliJee.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +20,9 @@ import fr.m2i.formation.appliJee.service.IServiceCompte;
 public class CompteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
      
-	@EJB //pour initialiser serviceCompte en reférençant un EJB existant
+	//@EJB //pour initialiser serviceCompte en reférençant un EJB existant
 	//compatible avec IServiceCompte .
+	@Inject
 	private IServiceCompte serviceCompte;
    
     public CompteServlet() {

@@ -1,11 +1,17 @@
 package fr.m2i.formation.appliJee.web.rest;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import fr.m2i.formation.appliJee.entity.Compte;
+import fr.m2i.formation.appliJee.service.IServiceCompte;
 
 /*
  * classe java du WS REST sur les Comptes bancaires
@@ -15,15 +21,30 @@ import fr.m2i.formation.appliJee.entity.Compte;
 @Produces("application/json")
 public class CompteRest {
 	
+	//le ancien @EJB n'est pas interprété ici dans la techno récente JAX-RS
+	@Inject //@Inject est une annonation un peu plus récente de CDI/JEE6
+	private IServiceCompte serviceCompte; //ejb vers lequel faire des appels
+	
 	@GET
 	@Path("/{num}")
 	//@JwtTokenNeeded
 	// URL= http://localhost:8080/appliJee-web/rest/service/compte/2
 	public Compte getCompteByNum(@PathParam("num") Long num) {
 		//v1 sans lien avec EJB
-		return new Compte(num , "compte " + num , 50.0);	
+		//return new Compte(num , "compte " + num , 50.0);
+		//v2 avec EJB:
+		return serviceCompte.rechercherCompteParNumero(num);
 	}
 	
-	//...
+	@GET
+	@Path("")
+	// URL= http://localhost:8080/appliJee-web/rest/service/compte?numMax=2
+	public List<Compte> getComptesByNumMax(@QueryParam("numMax") Long numMax) {
+		//v1 sans lien avec EJB
+		List<Compte> listeComptes = new ArrayList<Compte>();
+		  if(numMax>=1) listeComptes.add(new Compte(1L , "compte 1"  , 50.0));
+		  if(numMax>=2) listeComptes.add(new Compte(2L , "compte 2"  , 80.0));
+		return listeComptes;
+	}
 
 }

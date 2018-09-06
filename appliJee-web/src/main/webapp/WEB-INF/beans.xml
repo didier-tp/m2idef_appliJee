@@ -1,0 +1,11 @@
+<!-- config file for CDI (JEE6 / JSR299) in WEB-INF or META-INF (ejb) -->
+<!-- ce fichier doit exister dans le projet pour que @Inject fonctionne  -->
+<beans xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="
+http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+<alternatives>
+   <!-- <class>....</class> <class>....</class> -->
+</alternatives>
+</beans>

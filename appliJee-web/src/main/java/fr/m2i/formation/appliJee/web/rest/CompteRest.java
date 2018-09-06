@@ -17,10 +17,11 @@ public class CompteRest {
 	
 	@GET
 	@Path("/{num}")
+	//@JwtTokenNeeded
 	// URL= http://localhost:8080/appliJee-web/rest/service/compte/2
 	public Compte getCompteByNum(@PathParam("num") Long num) {
 		//v1 sans lien avec EJB
-		return new Compte(num , "compte " + num , 50.0);
+		return new Compte(num , "compte " + num , 50.0);	
 	}
 	
 	//...

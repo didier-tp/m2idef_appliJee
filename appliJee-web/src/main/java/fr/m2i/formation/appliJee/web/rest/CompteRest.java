@@ -25,7 +25,7 @@ import fr.m2i.formation.appliJee.service.IServiceCompte;
 public class CompteRest {
 	
 	//le ancien @EJB n'est pas interprété ici dans la techno récente JAX-RS
-	@Inject //@Inject est une annonation un peu plus récente de CDI/JEE6
+	@Inject //@Inject est une annotation un peu plus récente de CDI/JEE6
 	private IServiceCompte serviceCompte; //ejb vers lequel faire des appels
 	
 	@GET
@@ -57,10 +57,12 @@ public class CompteRest {
 	@Path("")
 	// URL= http://localhost:8080/appliJee-web/rest/service/compte?numMax=2
 	public List<Compte> getComptesByNumMax(@QueryParam("numMax") Long numMax) {
-		//v1 sans lien avec EJB
+		//v1 sans lien avec EJB , v2 avec EJB
 		List<Compte> listeComptes = new ArrayList<Compte>();
-		  if(numMax>=1) listeComptes.add(new Compte(1L , "compte 1"  , 50.0));
-		  if(numMax>=2) listeComptes.add(new Compte(2L , "compte 2"  , 80.0));
+		  //if(numMax>=1) listeComptes.add(new Compte(1L , "compte 1"  , 50.0));
+		  //if(numMax>=2) listeComptes.add(new Compte(2L , "compte 2"  , 80.0));
+		 for(long i=1;i<=numMax;i++)
+			 listeComptes.add(serviceCompte.rechercherCompteParNumero(i));
 		return listeComptes;
 	}
 

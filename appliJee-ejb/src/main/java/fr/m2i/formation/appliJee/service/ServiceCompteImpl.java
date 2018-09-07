@@ -3,6 +3,10 @@ package fr.m2i.formation.appliJee.service;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.jws.WebService;
 
 import fr.m2i.formation.appliJee.dao.IDaoCompte;
@@ -19,6 +23,8 @@ import fr.m2i.formation.appliJee.entity.Compte;
 @Stateless //EJB Session sans état (EJB de traitement)
 @Local //accès local possible (depuis autre EJB ou partie web)
 //@TransactionManagement(TransactionManagementType.CONTAINER) par défaut sur EJB
+@TransactionManagement(TransactionManagementType.BEAN) //transaction à coder nous même
+@TransactionAttribute(TransactionAttributeType.NEVER)
 //@TransactionAttribute(TransactionAttributeType.REQUIRED)par défaut sur EJB
 @WebService(endpointInterface="fr.m2i.formation.appliJee.service.IServiceCompte")
 public class ServiceCompteImpl implements IServiceCompte {

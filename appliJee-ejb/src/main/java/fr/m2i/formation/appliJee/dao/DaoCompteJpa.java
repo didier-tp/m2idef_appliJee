@@ -76,7 +76,7 @@ public class DaoCompteJpa implements IDaoCompte {
 		try {
 			this.entityManager= emf.createEntityManager();
 			   entityManager.getTransaction().begin();
-			   System.out.println("sans transaction explicite");
+			   System.out.println("avec transaction explicite");
 			   entityManager.merge(cpt);
 			   entityManager.getTransaction().commit();
 		} catch (Exception e) {

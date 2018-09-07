@@ -1,19 +1,13 @@
 package fr.m2i.formation.appliJee.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 /*
  * implementation du DAO en s'appuyant sur la technologie 
@@ -24,16 +18,15 @@ import fr.m2i.formation.appliJee.entity.Compte;
 
 @Stateless //EJB Session sans état (EJB de traitement)
 @Local //accès local possible (depuis autre EJB ou partie web)
-//@TransactionManagement(TransactionManagementType.CONTAINER) par defaut sur EJB , transactions automatiques
-@TransactionManagement(TransactionManagementType.BEAN) //transaction à coder nous même
+@TransactionManagement(TransactionManagementType.CONTAINER) //par defaut sur EJB , transactions automatiques
+//@TransactionManagement(TransactionManagementType.BEAN) //transaction à coder nous même
 public class DaoCompteJpa implements IDaoCompte {
 	
-	//@PersistenceContext(unitName="appliJee-ejb") //initialise entityManager 
+	@PersistenceContext(unitName="appliJee-ejb") //initialise entityManager 
 	//via META-INF/persistence.xml
 	private EntityManager entityManager; //objet principal de la techno JPA
-	
+	/*
 	private EntityManagerFactory emf;
-	
 	
 	@PostConstruct()
 	public void init() {
@@ -47,6 +40,7 @@ public class DaoCompteJpa implements IDaoCompte {
 		//le fichier META-INF/persistence.xml est pris en compte
 		this.emf = Persistence.createEntityManagerFactory("appliJee-ejb", properties);
 	}
+	*/
 
 	@Override
 	public Compte createCompte(Compte cpt) {
@@ -55,13 +49,20 @@ public class DaoCompteJpa implements IDaoCompte {
 		return cpt;//on retourne le compte avec numéro non null
 	}
 
+	/*
 	@Override
 	public Compte getCompteByNumero(Long numero) {
 		this.entityManager= emf.createEntityManager();
 		  Compte cpt = entityManager.find(Compte.class, numero);
 		this.entityManager.close();
 		   return cpt;
+	}*/
+	
+	@Override
+	public Compte getCompteByNumero(Long numero) {
+		return entityManager.find(Compte.class, numero);
 	}
+	
 
 	@Override
 	public List<Compte> getComptesDuClient(Long numeroClient) {
@@ -69,6 +70,7 @@ public class DaoCompteJpa implements IDaoCompte {
 		return null;
 	}
 
+	/*
 	@Override
 	public void updateCompte(Compte cpt) {
 		try {
@@ -83,7 +85,13 @@ public class DaoCompteJpa implements IDaoCompte {
 		}finally {
 			this.entityManager.close();
 		}
+	}*/
+	
+	@Override
+	public void updateCompte(Compte cpt) {
+		entityManager.merge(cpt);
 	}
+	
 
 	@Override
 	public void deleteCompte(Long numero) {

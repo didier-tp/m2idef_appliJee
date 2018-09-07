@@ -23,8 +23,6 @@ import fr.m2i.formation.appliJee.entity.Compte;
 @Stateless //EJB Session sans état (EJB de traitement)
 @Local //accès local possible (depuis autre EJB ou partie web)
 //@TransactionManagement(TransactionManagementType.CONTAINER) par défaut sur EJB
-@TransactionManagement(TransactionManagementType.BEAN) //transaction à coder nous même
-@TransactionAttribute(TransactionAttributeType.NEVER)
 //@TransactionAttribute(TransactionAttributeType.REQUIRED)par défaut sur EJB
 @WebService(endpointInterface="fr.m2i.formation.appliJee.service.IServiceCompte")
 public class ServiceCompteImpl implements IServiceCompte {

@@ -63,6 +63,7 @@ public class CompteRest {
 		  //if(numMax>=2) listeComptes.add(new Compte(2L , "compte 2"  , 80.0));
 		 for(long i=1;i<=numMax;i++)
 			 listeComptes.add(serviceCompte.rechercherCompteParNumero(i));
+		 //System.out.println("listeComptes:"+listeComptes);
 		return listeComptes;
 	}
 

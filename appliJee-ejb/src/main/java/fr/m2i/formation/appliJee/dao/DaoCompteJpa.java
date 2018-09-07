@@ -44,7 +44,7 @@ public class DaoCompteJpa implements IDaoCompte {
 		properties.put("javax.persistence.jdbc.driver", "org.h2.Driver");
 		properties.put("javax.persistence.jdbc.user", "sa");
 		properties.put("javax.persistence.jdbc.password", "sa");
-		properties.put("javax.persistence.jdbc.url", "jdbc:h2:~/compteDB");
+		properties.put("javax.persistence.jdbc.url", "jdbc:h2:~/compteDB;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE");
 		//le fichier META-INF/persistence.xml est pris en compte
 		this.emf = Persistence.createEntityManagerFactory("appliJee-ejb", properties);
 		//this.entityManager= emf.createEntityManager();
@@ -75,10 +75,10 @@ public class DaoCompteJpa implements IDaoCompte {
 	public void updateCompte(Compte cpt) {
 		try {
 			this.entityManager= emf.createEntityManager();
-			   entityManager.getTransaction().begin();
-			   System.out.println("avec transaction explicite");
+			   //entityManager.getTransaction().begin();
+			   System.out.println("sans transaction explicite");
 			   entityManager.merge(cpt);
-			   entityManager.getTransaction().commit();
+			   //entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			this.entityManager.getTransaction().rollback();
 			e.printStackTrace();

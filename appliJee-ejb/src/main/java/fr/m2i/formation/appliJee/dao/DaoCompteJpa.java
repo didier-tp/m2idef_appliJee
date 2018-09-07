@@ -26,7 +26,6 @@ import fr.m2i.formation.appliJee.entity.Compte;
 @Local //accès local possible (depuis autre EJB ou partie web)
 //@TransactionManagement(TransactionManagementType.CONTAINER) par defaut sur EJB , transactions automatiques
 @TransactionManagement(TransactionManagementType.BEAN) //transaction à coder nous même
-@TransactionAttribute(TransactionAttributeType.NEVER)
 public class DaoCompteJpa implements IDaoCompte {
 	
 	//@PersistenceContext(unitName="appliJee-ejb") //initialise entityManager 

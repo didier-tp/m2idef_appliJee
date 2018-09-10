@@ -64,4 +64,9 @@ public class ServiceCompteImpl implements IServiceCompte {
 		}
 	}
 
+	@Override
+	public void ajouterCompte(Compte nouveauCompte) {
+		daoCompte.createCompte(nouveauCompte);
+	}
+
 }

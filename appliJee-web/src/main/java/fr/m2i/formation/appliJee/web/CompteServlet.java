@@ -53,8 +53,31 @@ public class CompteServlet extends HttpServlet {
 			Compte compte = serviceCompte.rechercherCompteParNumero(numeroCompte);
 			out.println("label="+compte.getLabel()+"<br/>");
 			out.println("solde="+compte.getSolde()+"<br/>");
+		}else if(task.equals("testerCompte")) {
+			this.testerCompte(out);
 		}
 		out.println("</body></html>");
+	}
+	
+	private void testerCompte(PrintWriter out) {
+		out.println("tester Compte / CRUD"); //aujourd'hui via servlet utilisant EJB
+		//d'autre fois dans test JUnit utilisant Service Spring
+		
+		//Astuce : pour tester Service et DAO , la sequence suivante
+		
+		//Ajout en base d'une nouvelle entité
+		Compte nouveauCompte = new Compte(null,"nouveau compte",200.0);
+		this.serviceCompte.ajouterCompte(nouveauCompte);
+		out.println("numero compte ajouté = " + nouveauCompte.getNumero());
+		//relecture pour vérifier
+		
+		//Modif en mémoire et en base
+		
+		//Relecture pour verifier
+		
+		//Suppression en base et verification
+		
+		
 	}
 
 	

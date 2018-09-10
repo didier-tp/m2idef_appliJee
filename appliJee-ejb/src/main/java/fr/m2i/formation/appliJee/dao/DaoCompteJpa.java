@@ -63,8 +63,9 @@ public class DaoCompteJpa implements IDaoCompte {
 
 	@Override
 	public List<Compte> getComptesDuClient(Long numeroClient) {
-		// sera codé plus tard @OneToMany , ...
-		return null;
+		return entityManager.createQuery(
+				"SELECT cpt FROM Client cli JOIN cli.comptes cpt WHERE cli.numero = :numeroClient",
+				Compte.class).setParameter("numeroClient",numeroClient).getResultList();
 	}
 
 	/*

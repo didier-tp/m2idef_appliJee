@@ -106,4 +106,9 @@ public class ServiceCompteImpl implements IServiceCompte {
 		return daoCompte.getCompteWithOperationsByNumber(numCpt);
 	}
 
+	@Override
+	public List<Compte> rechercherComptesDuClient(long numeroClient) {
+		return daoCompte.getComptesDuClient(numeroClient);
+	}
+
 }

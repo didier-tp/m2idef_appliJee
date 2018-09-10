@@ -1,5 +1,6 @@
 package fr.m2i.formation.appliJee.web;
 
+import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -88,6 +89,11 @@ public class CompteServlet extends HttpServlet {
 		//avec EAGER ou LAZY sur le @OneToMany entre Compte et Operation:
 		for(Operation op : cpt1.getOperations()) {
 			out.println("  operation du compte 1:" + op +"<br/>");
+		}
+		
+		List<Compte> comptes = this.serviceCompte.rechercherComptesDuClient(1);
+		for(Compte cpt : comptes) {
+			out.println("  compte du client 1:" + cpt +"<br/>");
 		}
 	}
 

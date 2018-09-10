@@ -8,9 +8,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /* Compte bancaire */
 @Entity //Entité de données persitante en base (alias EJB Entité)
@@ -34,6 +37,10 @@ public class Compte {
 	//@JsonIgnore
 	private List<Operation> operations; //relation inverse (FALCULTATIVE) 
 	                                    // vis à vis de @ManyToOne au dessus de compte dans Operation
+	
+	@ManyToMany(mappedBy="comptes",fetch=FetchType.LAZY)
+	@JsonIgnore
+	private List<Client> clients; //avec get/set
 	
 	//+get/set , +constructeurs , +toString()
 
@@ -80,6 +87,14 @@ public class Compte {
 
 	public void setOperations(List<Operation> operations) {
 		this.operations = operations;
+	}
+
+	public List<Client> getClients() {
+		return clients;
+	}
+
+	public void setClients(List<Client> clients) {
+		this.clients = clients;
 	}
 
 	

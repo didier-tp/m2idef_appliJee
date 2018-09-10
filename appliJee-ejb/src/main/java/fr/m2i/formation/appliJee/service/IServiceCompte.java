@@ -1,5 +1,7 @@
 package fr.m2i.formation.appliJee.service;
 
+import java.util.List;
+
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
@@ -29,4 +31,5 @@ public interface IServiceCompte {
 	   public void mettreAjourCompte(Compte compte);
 	   public void supprimerCompte(Long numCpt);
 	   public Compte rechercherCompteAvecOperationsParNumero(long l);
+	   public List<Compte> rechercherComptesDuClient(long numeroClient);
 }

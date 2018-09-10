@@ -1,7 +1,7 @@
-INSERT INTO Compte(numero,label,solde) VALUES (1,'compte 1',50.0);
-INSERT INTO Compte(numero,label,solde) VALUES (2,'compte 2',80.0);
-INSERT INTO Compte(numero,label,solde) VALUES (3,'compte 3',150.0);
-INSERT INTO Compte(numero,label,solde) VALUES (4,'compte 4',180.0);
+INSERT INTO Compte(numero,label,solde,typeCompte) VALUES (1,'compte 1',50.0,'CompteCourant');
+INSERT INTO Compte(numero,label,solde,typeCompte,tauxInteret) VALUES (2,'compte 2',80.0,'ComptePEL',1.1);
+INSERT INTO Compte(numero,label,solde,typeCompte) VALUES (3,'compte 3',150.0,'CompteCourant');
+INSERT INTO Compte(numero,label,solde,typeCompte,tauxInteret) VALUES (4,'compte 4',180.0,'ComptePEL',1.0);
 
 INSERT INTO Operation(numOp,label,montant,dateOp,compte) VALUES (1,'achat xy',-5,'2018-09-07',1);
 INSERT INTO Operation(numOp,label,montant,dateOp,compte) VALUES (2,'achat zzz',-8,'2018-09-01',1);

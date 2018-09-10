@@ -69,4 +69,14 @@ public class ServiceCompteImpl implements IServiceCompte {
 		daoCompte.createCompte(nouveauCompte);
 	}
 
+	@Override
+	public void mettreAjourCompte(Compte compte) {
+		daoCompte.updateCompte(compte);
+	}
+
+	@Override
+	public void supprimerCompte(Long numCpt) {
+		daoCompte.deleteCompte(numCpt);
+	}
+
 }

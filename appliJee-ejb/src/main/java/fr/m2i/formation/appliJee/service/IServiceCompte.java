@@ -26,4 +26,6 @@ public interface IServiceCompte {
        //...
 	   public void saveOrUpdateCompte(Compte compte);
 	   public void ajouterCompte(Compte nouveauCompte);
+	   public void mettreAjourCompte(Compte compte);
+	   public void supprimerCompte(Long numCpt);
 }

@@ -60,24 +60,28 @@ public class CompteServlet extends HttpServlet {
 	}
 	
 	private void testerCompte(PrintWriter out) {
-		out.println("tester Compte / CRUD"); //aujourd'hui via servlet utilisant EJB
+		out.println("tester Compte / CRUD <br/>"); //aujourd'hui via servlet utilisant EJB
 		//d'autre fois dans test JUnit utilisant Service Spring
-		
-		//Astuce : pour tester Service et DAO , la sequence suivante
-		
+		//Astuce : pour tester Service et DAO , la sequence suivante:
 		//Ajout en base d'une nouvelle entité
 		Compte nouveauCompte = new Compte(null,"nouveau compte",200.0);
 		this.serviceCompte.ajouterCompte(nouveauCompte);
-		out.println("numero compte ajouté = " + nouveauCompte.getNumero());
-		//relecture pour vérifier
-		
+		Long numCpt = nouveauCompte.getNumero();
+		out.println("numero compte ajouté = " + numCpt + "<br/>");
+		//relecture pour vérifier l'ajout
+		Compte compteRelu = this.serviceCompte.rechercherCompteParNumero(numCpt);
+		out.println("compte ajouté et relu depuis DB=" + compteRelu + "<br/>");
 		//Modif en mémoire et en base
-		
-		//Relecture pour verifier
-		
+		nouveauCompte.setSolde(400.0); nouveauCompte.setLabel("compte modifié");
+		this.serviceCompte.mettreAjourCompte(nouveauCompte);
+		//Relecture pour verifier la mise à jour
+		compteRelu = this.serviceCompte.rechercherCompteParNumero(numCpt);
+		out.println("compte ajouté et relu depuis DB=" + compteRelu + "<br/>");
 		//Suppression en base et verification
-		
-		
+		this.serviceCompte.supprimerCompte(numCpt);
+		compteRelu = this.serviceCompte.rechercherCompteParNumero(numCpt);
+		if(compteRelu==null)
+			out.println("compte bien supprimé ");
 	}
 
 	

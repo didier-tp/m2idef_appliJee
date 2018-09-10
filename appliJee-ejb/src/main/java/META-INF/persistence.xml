@@ -10,7 +10,7 @@
     <!-- transaction-type="JTA" avec jboss/EJB3 ou bien "RESOURCE_LOCAL" en version simple -->
 	<persistence-unit name="appliJee-ejb" transaction-type="JTA">
 	   <!-- parametrage de la connection à la base de donnée: -->
-	   <jta-data-source>java:jboss/datasources/MysqlCompteDS</jta-data-source>
+	   <jta-data-source>java:jboss/datasources/CompteDS</jta-data-source>
 	   <!-- java:jboss/datasources/CompteDS est un jndi-name configure dans 
 	        standalone\configuration\standalone.xml de jboss wildfly 
 	        deux variantes : CompteDS avec H2 et MysqlCompteDS avec Mysql
@@ -25,7 +25,7 @@
 	            et l'éventuel fichier import.sql est lancé s'il existe 
 	            pratique en phase de développement MAIS PAS EN PROD -->
            <property name="hibernate.dialect" 
-                     value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+                     value="org.hibernate.dialect.H2Dialect"/>
            <!-- H2Dialect ou bien MySQL5InnoDBDialect -->          
 	   </properties>
 	</persistence-unit>

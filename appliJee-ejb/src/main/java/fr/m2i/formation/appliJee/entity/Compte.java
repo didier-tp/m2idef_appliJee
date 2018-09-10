@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity //Entité de données persitante en base (alias EJB Entité)
 @NamedQueries({
   @NamedQuery(name="Compte.findWithOperations",
-              query="SELECT c FROM Compte c JOIN FETCH c.operations WHERE c.numero = :numCpt")
+              query="SELECT c FROM Compte c LEFT JOIN FETCH c.operations WHERE c.numero = :numCpt")
 })
 public class Compte {
 	

@@ -28,4 +28,5 @@ public interface IServiceCompte {
 	   public void ajouterCompte(Compte nouveauCompte);
 	   public void mettreAjourCompte(Compte compte);
 	   public void supprimerCompte(Long numCpt);
+	   public Compte rechercherCompteAvecOperationsParNumero(long l);
 }

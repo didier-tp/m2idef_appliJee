@@ -1,5 +1,7 @@
 package fr.m2i.formation.appliJee.service;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -77,6 +79,31 @@ public class ServiceCompteImpl implements IServiceCompte {
 	@Override
 	public void supprimerCompte(Long numCpt) {
 		daoCompte.deleteCompte(numCpt);
+	}
+
+	private static void fetchLazyCollection(List< ? extends Object> liste) {
+		for(Object obj : liste) {
+			//rien (simple parcours de la collection en mode LAZY)
+			//pour forcer les mécanismes internes de JPA/Hibernate
+			//à remonter tout de suite les valeurs de la base de données
+			//vers la mémoire
+			//AVANT QU'IL NE SOIT TROP TARD (coté web ou ...)
+		}
+	}
+	
+	@Override
+	public Compte rechercherCompteAvecOperationsParNumero(long numCpt) {
+		/*
+			//solution 1 (pour le mode lazy):
+			Compte cpt = this.daoCompte.getCompteByNumero(numCpt);
+			fetchLazyCollection(cpt.getOperations());
+			return cpt;
+			//seulement en cette fin de méthode transactionnelle sur EJB
+			//la transaction et le entityManager sont fermés
+		 */
+		//solution 2 (pour le lazy) appeler sur le dao une méthode de recherche
+		//avec SELECT ... JOIN FETCH ... :
+		return daoCompte.getCompteWithOperationsByNumber(numCpt);
 	}
 
 }

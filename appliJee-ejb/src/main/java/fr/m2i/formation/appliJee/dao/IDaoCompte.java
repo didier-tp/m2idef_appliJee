@@ -16,4 +16,5 @@ public interface IDaoCompte {
     public List<Compte> getComptesDuClient(Long numeroClient);
     public void updateCompte(Compte cpt);
     public void deleteCompte(Long numero);
+	public Compte getCompteWithOperationsByNumber(long numCpt);
 }

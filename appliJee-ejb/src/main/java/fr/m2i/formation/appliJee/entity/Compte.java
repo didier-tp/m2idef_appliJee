@@ -24,7 +24,7 @@ public class Compte {
 	
 	private Double solde;
 	
-	@OneToMany(mappedBy="compte",fetch=FetchType.EAGER)//EAGER temporairement en V1 , LAZY en V2
+	@OneToMany(mappedBy="compte",fetch=FetchType.LAZY)//EAGER temporairement en V1 , LAZY en V2
 	private List<Operation> operations; //relation inverse (FALCULTATIVE) 
 	                                    // vis à vis de @ManyToOne au dessus de compte dans Operation
 	

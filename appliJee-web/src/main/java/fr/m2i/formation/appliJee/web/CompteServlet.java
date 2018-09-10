@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.m2i.formation.appliJee.entity.Compte;
+import fr.m2i.formation.appliJee.entity.Operation;
 import fr.m2i.formation.appliJee.service.IServiceCompte;
 
 /**
@@ -81,7 +82,13 @@ public class CompteServlet extends HttpServlet {
 		this.serviceCompte.supprimerCompte(numCpt);
 		compteRelu = this.serviceCompte.rechercherCompteParNumero(numCpt);
 		if(compteRelu==null)
-			out.println("compte bien supprimé ");
+			out.println("compte bien supprimé <br/>");
+		
+		Compte cpt1 = this.serviceCompte.rechercherCompteAvecOperationsParNumero(1L);
+		//avec EAGER ou LAZY sur le @OneToMany entre Compte et Operation:
+		for(Operation op : cpt1.getOperations()) {
+			out.println("  operation du compte 1:" + op +"<br/>");
+		}
 	}
 
 	

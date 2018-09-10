@@ -58,10 +58,7 @@ public class DaoCompteJpa implements IDaoCompte {
 		   return cpt;
 	}*/
 	
-	@Override
-	public Compte getCompteByNumero(Long numero) {
-		return entityManager.find(Compte.class, numero);
-	}
+	
 	
 
 	@Override
@@ -97,6 +94,18 @@ public class DaoCompteJpa implements IDaoCompte {
 	public void deleteCompte(Long numero) {
 		Compte cptASupprimer = entityManager.find(Compte.class, numero);
         entityManager.remove(cptASupprimer);
+	}
+	
+	@Override
+	public Compte getCompteByNumero(Long numero) {
+		return entityManager.find(Compte.class, numero);
+	}
+
+	@Override
+	public Compte getCompteWithOperationsByNumber(long numCpt) {
+		return entityManager.createQuery(
+				"SELECT c FROM Compte c JOIN FETCH c.operations o WHERE c.numero = :numCpt",
+				Compte.class).setParameter("numCpt",numCpt).getSingleResult();
 	}
 
 }

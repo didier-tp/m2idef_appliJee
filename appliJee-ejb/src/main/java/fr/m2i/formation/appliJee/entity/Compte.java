@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /* Compte bancaire */
 @Entity //Entité de données persitante en base (alias EJB Entité)
 public class Compte {
@@ -25,6 +27,7 @@ public class Compte {
 	private Double solde;
 	
 	@OneToMany(mappedBy="compte",fetch=FetchType.LAZY)//EAGER temporairement en V1 , LAZY en V2
+	//@JsonIgnore
 	private List<Operation> operations; //relation inverse (FALCULTATIVE) 
 	                                    // vis à vis de @ManyToOne au dessus de compte dans Operation
 	

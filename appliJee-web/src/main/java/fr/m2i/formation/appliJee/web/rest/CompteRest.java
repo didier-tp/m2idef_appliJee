@@ -36,7 +36,8 @@ public class CompteRest {
 		//v1 sans lien avec EJB
 		//return new Compte(num , "compte " + num , 50.0);
 		//v2 avec EJB:
-		return serviceCompte.rechercherCompteParNumero(num);
+		//return serviceCompte.rechercherCompteParNumero(num);
+		return serviceCompte.rechercherCompteAvecOperationsParNumero(num);
 	}
 	
 	//a tester avec PostMan , avec Content-Type = application/json dans Headers
@@ -62,7 +63,7 @@ public class CompteRest {
 		  //if(numMax>=1) listeComptes.add(new Compte(1L , "compte 1"  , 50.0));
 		  //if(numMax>=2) listeComptes.add(new Compte(2L , "compte 2"  , 80.0));
 		 for(long i=1;i<=numMax;i++)
-			 listeComptes.add(serviceCompte.rechercherCompteParNumero(i));
+			 listeComptes.add(serviceCompte.rechercherCompteAvecOperationsParNumero(i));
 		 //System.out.println("listeComptes:"+listeComptes);
 		return listeComptes;
 	}

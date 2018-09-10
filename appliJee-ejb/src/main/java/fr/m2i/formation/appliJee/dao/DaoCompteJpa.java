@@ -103,9 +103,12 @@ public class DaoCompteJpa implements IDaoCompte {
 
 	@Override
 	public Compte getCompteWithOperationsByNumber(long numCpt) {
-		return entityManager.createQuery(
+		/*return entityManager.createQuery(
 				"SELECT c FROM Compte c JOIN FETCH c.operations o WHERE c.numero = :numCpt",
-				Compte.class).setParameter("numCpt",numCpt).getSingleResult();
+				Compte.class).setParameter("numCpt",numCpt).getSingleResult();*/
+		return entityManager.createNamedQuery("Compte.findWithOperations",Compte.class)
+							.setParameter("numCpt",numCpt)
+							.getSingleResult();
 	}
 
 }

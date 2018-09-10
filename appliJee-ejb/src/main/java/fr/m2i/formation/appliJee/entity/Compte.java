@@ -8,12 +8,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /* Compte bancaire */
 @Entity //Entité de données persitante en base (alias EJB Entité)
+@NamedQueries({
+  @NamedQuery(name="Compte.findWithOperations",
+              query="SELECT c FROM Compte c JOIN FETCH c.operations WHERE c.numero = :numCpt")
+})
 public class Compte {
 	
 	@Id	//@Id = identifiant (clef primaire)

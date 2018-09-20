@@ -45,6 +45,21 @@
 		</dependency>
 		-->
 		
+		
+		<dependency>
+    		<groupId>org.slf4j</groupId>
+    		<artifactId>slf4j-api</artifactId>
+    		<version>1.7.24</version>
+    		<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.projectlombok</groupId>
+    		<artifactId>lombok</artifactId>
+    		<version>1.16.14</version>
+    		<scope>provided</scope>
+    	</dependency>
+		
   </dependencies>
   
 </project>

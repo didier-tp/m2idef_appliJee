@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>registerUser</title>
+	<script src="jquery-3.2.1.js"></script>
+	<script src="js/my-jq-ajax-util.js"></script>
+	<script>
+	
+	function nullIfEmpty(aString){
+		if(aString == null) return null;
+		if(aString.length < 1) return null;
+		/*else*/ return aString;
+	}
+	
+	 $(function() {
+		 $('#btnRegister').on('click',function(){
+			 
+			 var newUser = { username : null, 
+					         password : null ,
+					         email : null,
+					         phoneNumber : null,
+					         firstName : null,
+					         lastName :null } ;
+			 
+		 newUser.username = $('#txtUsername').val();
+		 newUser.password = $('#txtPassword').val();
+		 newUser.email = nullIfEmpty($('#txtEmail').val());
+		 newUser.phoneNumber = nullIfEmpty($('#txtPhoneNumber').val());
+		 newUser.firstName = nullIfEmpty($('#txtFirstName').val());
+		 newUser.lastName = nullIfEmpty($('#txtLastName').val());
+			 
+			 $.ajax({
+		           type: "POST",
+		           url: "rest/auth/registerUser",
+		           dataType : "json",
+		           data : JSON.stringify(newUser),
+		           contentType : "application/json",
+				   success: function (data,status,xhr) {
+		               if (data) {
+		            	   console.log(JSON.stringify(data));
+		            	   var registerUserResponse = data;
+		            	   if(registerUserResponse.ok){
+		            		   $("#spanMsg").html(registerUserResponse.message);		            		
+		            	   }else{
+		            		   $("#spanMsg").html(registerUserResponse.message);
+		            	   }
+		               } 
+		           },
+		           error: function( jqXHR, textStatus, errorThrown ){
+		        	   $("#spanMsg").html( xhrStatusToErrorMessage(jqXHR) + "status:" + textStatus + " error : " + errorThrown ) ;
+		           }
+				   });//end $.ajax
+			 
+		 });//end on click btnRegister
+	 }); 
+	
+	</script>
+</head>
+<body>
+   <h3> new user to register (signup) </h3>
+   username : <input id="txtUsername" type='text' value="u..."/><br/>
+   password : <input id="txtPassword" type='text' value="pwd"/><br/>
+   email : <input id="txtEmail" type='text'/><br/>
+   phoneNumber : <input id="txtPhoneNumber" type='text'/><br/>
+   firstName : <input id="txtFirstName" type='text'/><br/>
+   lastName : <input id="txtLastName" type='text'/><br/>
+   
+   <input type='button' value="register" id="btnRegister"/> <br/>
+   <span id="spanMsg"></span> <br/>
+	<hr/>
+	<a href="login.html">login after register new user</a><br/>
+	<a href="index.html">retour vers index.html</a>
+</body>
+</html>

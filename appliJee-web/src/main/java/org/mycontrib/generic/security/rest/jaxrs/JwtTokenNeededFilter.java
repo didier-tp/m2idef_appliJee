@@ -1,16 +1,14 @@
-package fr.m2i.formation.appliJee.web.rest;
+package org.mycontrib.generic.security.rest.jaxrs;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.ext.Provider;
 
-import org.mycontrib.generic.security.jwt.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,13 +25,15 @@ public class JwtTokenNeededFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
+
+		// Get the HTTP Authorization header from the request String
+		String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+
+		String jwt = authorizationHeader.substring("Bearer".length()).trim();
 		/*
-		 * // Get the HTTP Authorization header from the request String
-		 * authorizationHeader =
-		 * requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 		 * 
 		 * // Extract the token from the HTTP Authorization header String token =
-		 * authorizationHeader.substring("Bearer".length()).trim();
+		 * 
 		 * 
 		 * try {
 		 * 
@@ -48,15 +48,6 @@ public class JwtTokenNeededFilter implements ContainerRequestFilter {
 
 		// Test temporaire:
 		System.out.println("JWTTokenNeededFilter.filter() was called");
-		long jwtExpirationInMs = 60 * 15 * 1000; // = 900000ms pour 15minutes
-		String username = "user1";
-		String secretKey = "mySecretKey";
-		Set<String> roles = new HashSet<String>();
-		roles.add("USER");
-		roles.add("MEMBER");
-		String myJwt = JwtUtil.buildToken(username, jwtExpirationInMs, secretKey, roles);
-		logger.info("myJwt=" + myJwt);
-		logger.info("claims in jwt=" + JwtUtil.extractClaimsFromJWT(myJwt, secretKey).toString());
 
 	}
 }

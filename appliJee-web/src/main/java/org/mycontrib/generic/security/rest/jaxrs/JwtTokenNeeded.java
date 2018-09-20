@@ -1,4 +1,4 @@
-package fr.m2i.formation.appliJee.web.rest;
+package org.mycontrib.generic.security.rest.jaxrs;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;

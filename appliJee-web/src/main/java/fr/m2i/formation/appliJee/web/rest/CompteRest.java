@@ -12,6 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import org.mycontrib.generic.security.rest.jaxrs.JwtTokenNeeded;
+
 import fr.m2i.formation.appliJee.entity.Compte;
 import fr.m2i.formation.appliJee.service.IServiceCompte;
 

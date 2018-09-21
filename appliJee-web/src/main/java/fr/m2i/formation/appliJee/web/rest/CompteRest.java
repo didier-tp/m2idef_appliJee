@@ -11,8 +11,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.SecurityContext;
 
 import org.mycontrib.generic.security.rest.jaxrs.JwtTokenNeeded;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.m2i.formation.appliJee.entity.Compte;
 import fr.m2i.formation.appliJee.service.IServiceCompte;
@@ -30,11 +34,17 @@ public class CompteRest {
 	@Inject // @Inject est une annotation un peu plus récente de CDI/JEE6
 	private IServiceCompte serviceCompte; // ejb vers lequel faire des appels
 
+	@Context
+	SecurityContext securityContext;
+
+	private static Logger logger = LoggerFactory.getLogger(CompteRest.class);
+
 	@GET
 	@Path("/{num}")
-	@JwtTokenNeeded
+	@JwtTokenNeeded()
 	// URL= http://localhost:8080/appliJee-web/rest/service/compte/2
 	public Compte getCompteByNum(@PathParam("num") Long num) {
+
 		// v1 sans lien avec EJB
 		// return new Compte(num , "compte " + num , 50.0);
 		// v2 avec EJB:
@@ -51,7 +61,7 @@ public class CompteRest {
 	// avec { "numero": null ou 3 , "label": "compte xy" , "solde" : 50.0 }
 	// dans le corps/body invisible de la requete en mode "raw"
 	// et au format Content-Type=application/json
-	@JwtTokenNeeded
+	@JwtTokenNeeded()
 	public Compte postCompte(Compte compte) {
 		serviceCompte.saveOrUpdateCompte(compte);
 		return compte;// en retour , copie du compte sauvegardé avec clef primaire quelquefois
@@ -61,8 +71,11 @@ public class CompteRest {
 	@GET
 	@Path("")
 	// URL= http://localhost:8080/appliJee-web/rest/service/compte?numMax=2
-	@JwtTokenNeeded
+	@JwtTokenNeeded()
 	public List<Compte> getComptesByNumMax(@QueryParam("numMax") Long numMax) {
+		if (securityContext.isUserInRole("MEMBER"))
+			logger.info("MEMBER role in securityContext");
+
 		// v1 sans lien avec EJB , v2 avec EJB
 		List<Compte> listeComptes = new ArrayList<Compte>();
 		// if(numMax>=1) listeComptes.add(new Compte(1L , "compte 1" , 50.0));

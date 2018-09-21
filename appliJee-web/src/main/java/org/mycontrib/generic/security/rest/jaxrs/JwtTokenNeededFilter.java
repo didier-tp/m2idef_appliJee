@@ -1,11 +1,14 @@
 package org.mycontrib.generic.security.rest.jaxrs;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
@@ -22,8 +25,12 @@ public class JwtTokenNeededFilter implements ContainerRequestFilter {
 
 	private static final Logger logger = LoggerFactory.getLogger(JwtTokenNeededFilter.class);
 
+	@Context
+	private ResourceInfo resourceInfo;
+
 	/*
-	 * @Inject private KeyGenerator keyGenerator;
+	 * @Inject private KeyGenerator keyGenerator; //or
+	 * JwtConstant.DEFAULT_SECRET_KEY
 	 */
 
 	private String extractJwtFromAuthorizationHeader(ContainerRequestContext requestContext) {
@@ -41,7 +48,15 @@ public class JwtTokenNeededFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		logger.info("JWTTokenNeededFilter.filter() was called");
+		logger.info("JwtTokenNeededFilter.filter() was called");
+
+		Method method = resourceInfo.getResourceMethod();
+
+		if (method != null) {
+			JwtTokenNeeded jwtTokenNeededAnnotation = method.getAnnotation(JwtTokenNeeded.class);
+			logger.info("jwtTokenNeededAnnotation found :" + jwtTokenNeededAnnotation);
+		}
+
 		String jwt = null;
 		// extract Jwt bear token From AuthorizationHeader of Http request:
 		jwt = extractJwtFromAuthorizationHeader(requestContext);// may be null
@@ -49,6 +64,7 @@ public class JwtTokenNeededFilter implements ContainerRequestFilter {
 		if (JwtUtil.validateToken(jwt, JwtConstant.DEFAULT_SECRET_KEY)) {
 			logger.info("#### valid token : " + jwt + " with claims = "
 					+ JwtUtil.extractClaimsFromJWT(jwt, JwtConstant.DEFAULT_SECRET_KEY));
+			requestContext.setSecurityContext(new MySecurityContext());
 		} else {
 			logger.error("#### invalid token : " + jwt);
 			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());

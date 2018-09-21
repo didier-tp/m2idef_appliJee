@@ -43,7 +43,7 @@ public class AuthController /* extends AbstractRestAuthWS */ {
 			String username = loginRequest.getUsername();
 			String secretKey = JwtConstant.DEFAULT_SECRET_KEY;
 			Set<String> roles = new HashSet<String>();
-			roles.add("USER");
+			// roles.add("USER");
 			roles.add("MEMBER");
 			String myJwt = JwtUtil.buildToken(username, jwtExpirationInMs, secretKey, roles);
 			logger.info("myJwt=" + myJwt);

@@ -13,4 +13,5 @@ import java.lang.annotation.Target;
 							// et declenchement filtre ContainerRequestFilter , @Provider
 							// depuis JAX-RS2 et JEE7
 public @interface JwtTokenNeeded {
+	public String[] value() default {};// rolesAllowed
 }

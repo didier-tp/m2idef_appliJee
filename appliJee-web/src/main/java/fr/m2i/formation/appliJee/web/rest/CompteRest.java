@@ -3,6 +3,7 @@ package fr.m2i.formation.appliJee.web.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -71,7 +72,8 @@ public class CompteRest {
 	@GET
 	@Path("")
 	// URL= http://localhost:8080/appliJee-web/rest/service/compte?numMax=2
-	@JwtTokenNeeded()
+	// @JwtTokenNeeded({ "MEMBER" })
+	@RolesAllowed({ "ADMIN", "MEMBER" }) // javax.annotation.security.RolesAllowed
 	public List<Compte> getComptesByNumMax(@QueryParam("numMax") Long numMax) {
 		if (securityContext.isUserInRole("MEMBER"))
 			logger.info("MEMBER role in securityContext");

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import javax.annotation.Priority;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -18,8 +19,11 @@ import org.mycontrib.generic.security.jwt.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+//https://stackoverflow.com/questions/26777083/best-practice-for-rest-token-based-authentication-with-jax-rs-and-jersey/45814178
+
 @Provider
-@JwtTokenNeeded
+//@JwtTokenNeeded //NB: si @JwtTokenNeeded , filtre declenché que si @JwtTokenNeeded présent sur méthode d'un WS REST à securiser
+//sans @JwtTokenNeeded ici, ce filtre est tout le temps déclenché , prevoir un @PermitAll par defaut ou pas .
 @Priority(Priorities.AUTHENTICATION)
 public class JwtTokenNeededFilter implements ContainerRequestFilter {
 
@@ -54,7 +58,12 @@ public class JwtTokenNeededFilter implements ContainerRequestFilter {
 
 		if (method != null) {
 			JwtTokenNeeded jwtTokenNeededAnnotation = method.getAnnotation(JwtTokenNeeded.class);
-			logger.info("jwtTokenNeededAnnotation found :" + jwtTokenNeededAnnotation);
+			if (jwtTokenNeededAnnotation != null)
+				logger.info("jwtTokenNeededAnnotation found :" + jwtTokenNeededAnnotation.value().length);
+
+			RolesAllowed rolesAllowedAnnotation = method.getAnnotation(RolesAllowed.class);
+			if (rolesAllowedAnnotation != null)
+				logger.info("rolesAllowedAnnotation found :" + rolesAllowedAnnotation.value().length);
 		}
 
 		String jwt = null;
@@ -64,7 +73,7 @@ public class JwtTokenNeededFilter implements ContainerRequestFilter {
 		if (JwtUtil.validateToken(jwt, JwtConstant.DEFAULT_SECRET_KEY)) {
 			logger.info("#### valid token : " + jwt + " with claims = "
 					+ JwtUtil.extractClaimsFromJWT(jwt, JwtConstant.DEFAULT_SECRET_KEY));
-			requestContext.setSecurityContext(new MySecurityContext());
+			// requestContext.setSecurityContext(new MySecurityContext());
 		} else {
 			logger.error("#### invalid token : " + jwt);
 			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());

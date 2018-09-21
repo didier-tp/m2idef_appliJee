@@ -36,7 +36,7 @@ public class CompteRest {
 	private IServiceCompte serviceCompte; // ejb vers lequel faire des appels
 
 	@Context
-	SecurityContext securityContext;
+	SecurityContext securityContext;// not mandatory
 
 	private static Logger logger = LoggerFactory.getLogger(CompteRest.class);
 

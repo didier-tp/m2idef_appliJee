@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.mycontrib.generic.security.jwt.JwtConstant;
 import org.mycontrib.generic.security.jwt.JwtUtil;
 import org.mycontrib.generic.security.rest.payload.AuthRequest;
 import org.mycontrib.generic.security.rest.payload.AuthResponse;
@@ -40,7 +41,7 @@ public class AuthController /* extends AbstractRestAuthWS */ {
 
 			long jwtExpirationInMs = 60 * 15 * 1000; // = 900000ms pour 15minutes
 			String username = loginRequest.getUsername();
-			String secretKey = "mySecretKey";
+			String secretKey = JwtConstant.DEFAULT_SECRET_KEY;
 			Set<String> roles = new HashSet<String>();
 			roles.add("USER");
 			roles.add("MEMBER");

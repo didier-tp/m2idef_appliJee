@@ -11,6 +11,7 @@ function setSecurityTokenForAjax(){
 			  //xhr = XmlHttpRequest = objet technique du navigateur
 			  //qui déclenche les requêtes ajax
   	          xhr.setRequestHeader('Authorization',"Bearer "+ authToken);
+  	          console.log("Bearer "+ authToken + " stored in Authorization of Http Header")
   	       });
 
 }

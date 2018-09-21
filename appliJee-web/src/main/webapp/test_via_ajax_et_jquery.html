@@ -1,6 +1,7 @@
    <html >
     <head>
 	<script src="jquery-3.2.1.js"></script>
+	<script src="js/my-jq-ajax-util.js"></script>
     <script>
 	  var compteList;
 	  var compteNumSelected;//id=.numero
@@ -19,7 +20,7 @@
 	  }
 	  
       $(function() {
-	 	  
+	 	setSecurityTokenForAjax();//js/my-jq-ajax-util.js  
 	    $.ajax({
            type: "GET",
            url: "rest/service/compte?numMax=2",
@@ -39,14 +40,17 @@
                } else {
                    $("#spanMsg").html("Cannot GET comptes !");
                }
-           }
+           },
+           error: function( jqXHR, textStatus, errorThrown ){
+		        	   $("#spanMsg").html( xhrStatusToErrorMessage(jqXHR)  ) ;
+		           }
 		   });
         
 		
 	    
 		$('#btnUpdate').on('click',function(){
 		 local_update_selected_compte();
-		 
+		 setSecurityTokenForAjax();//js/my-jq-ajax-util.js
 		//$("#spanMsg").html( "message in the bottle" + JSON.stringify(compteSelected) ) ;
 		 $.ajax({
            type: "POST",
@@ -61,9 +65,9 @@
                    $("#spanMsg").html("Cannot PUT updated data");
                }
            },
-           error: function(xhr, status, error){
-        	   $("#spanMsg").html( "status:" + status + " error : " + error ) ;
-           }
+           error: function( jqXHR, textStatus, errorThrown ){
+		        	   $("#spanMsg").html( xhrStatusToErrorMessage(jqXHR)  ) ;
+		   }
 		   });
 		});
 	

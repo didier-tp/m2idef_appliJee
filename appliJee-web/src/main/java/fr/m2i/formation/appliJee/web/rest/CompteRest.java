@@ -51,6 +51,7 @@ public class CompteRest {
 	// avec { "numero": null ou 3 , "label": "compte xy" , "solde" : 50.0 }
 	// dans le corps/body invisible de la requete en mode "raw"
 	// et au format Content-Type=application/json
+	@JwtTokenNeeded
 	public Compte postCompte(Compte compte) {
 		serviceCompte.saveOrUpdateCompte(compte);
 		return compte;// en retour , copie du compte sauvegardé avec clef primaire quelquefois
@@ -60,6 +61,7 @@ public class CompteRest {
 	@GET
 	@Path("")
 	// URL= http://localhost:8080/appliJee-web/rest/service/compte?numMax=2
+	@JwtTokenNeeded
 	public List<Compte> getComptesByNumMax(@QueryParam("numMax") Long numMax) {
 		// v1 sans lien avec EJB , v2 avec EJB
 		List<Compte> listeComptes = new ArrayList<Compte>();
